@@ -5,11 +5,13 @@
 </nav>
 <div class="container">
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8 mt-4">
       <ul class="list-group">
         <li *ngFor="let dish of dishArray"
-          class="list-group-item">
-          {{dish.name}}
+          class="list-group-item list-group-item-action" role="button"
+          (click)=openForEdit(dish)
+          [class.active]="dish.id == selectedDish.id">
+          <span class="badge bg-primary">{{dish.id}}</span> {{dish.name}}
         </li>
       </ul>
       <div class="card mt-4">
@@ -17,6 +19,16 @@
           <div class="card-title">
              Insert a new Dish
           </div>
+          <div class="form-group">
+            <input type="text" [(ngModel)]="selectedDish.name" placeholder="Name" class="form-control" />            
+          </div>
+          <button (click)=addOrEdit() class="btn btn-primary me-1 mt-4">
+            submit
+          </button>
+          <button 
+          *ngIf="selectedDish.id !== 0"
+          (click)=delete(selectedDish.id)
+          class="btn btn-danger mt-4">Delete</button>
         </div>
       </div>
     </div>

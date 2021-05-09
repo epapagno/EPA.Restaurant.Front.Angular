@@ -1,43 +1,50 @@
 <nav class="navbar navbar-dark bg-primary">
   <a class="navbar-brand" href="/">
-    Angular Simple CRUD
+    Dish CRUD
   </a>
 </nav>
 <div class="container">
   <div class="row">
     <div class="col-md-8 mt-4">
-      <ul class="list-group">
-        <li *ngFor="let dish of dishArray"
-          class="list-group-item list-group-item-action" role="button"
+      <table class="table table-hover table-primary table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dish of dishArray" role="button"
           (click)=openForEdit(dish)
-          [class.active]="dish.id == selectedDish.id">
-          <span class="badge bg-primary">{{dish.id}}</span> {{dish.name}}
-        </li>
-      </ul>
-      <div class="card mt-4">
+          [class.table-active]="dish.id == selectedDish.id">
+            <th scope="row">{{dish.id}}</th>
+            <td>{{dish.name}}</td>
+          </tr>          
+        </tbody>
+      </table>
+      <div *ngIf="selectedDish.id > 0 || showCard" class="card mt-4">
         <div class="card-body">
           <div class="card-title">
-             Insert a new Dish
+             Dish:
           </div>
           <div class="form-group">
             <input type="text" [(ngModel)]="selectedDish.name" placeholder="Name" class="form-control" />            
           </div>
           <button (click)=addOrEdit() class="btn btn-primary me-1 mt-4">
-            submit
+            Save
           </button>
           <button 
           *ngIf="selectedDish.id !== 0"
           (click)=delete(selectedDish.id)
-          class="btn btn-danger mt-4">Delete</button>
+          class="btn btn-danger me-1 mt-4">Delete</button>
+          <button (click)=cancel() class="btn btn-secondary mt-4">
+            Cancel
+          </button>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
-      <img
-        width="40"
-        alt="Angular Logo"
-        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
-      />
+    <div class="col-md-4 mt-4">
+      <button class="btn btn-success" (click)=showEmptyCard()>Add</button>
     </div>
   </div>
 </div>
